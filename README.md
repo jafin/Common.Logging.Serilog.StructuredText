@@ -1,6 +1,6 @@
 # Common.Logger.Serilog.StructuredText
 
-This is a fork of [Common.Logging.Serilog 1.1.0](https://github.com/CaptiveAire/Common.Logging.Serilog)
+This is a fork of [Common.Logging.Serilog 2.2.0](https://github.com/CaptiveAire/Common.Logging.Serilog)
 
 It is a Common.Logging adapter for Serilog.
 
@@ -44,7 +44,10 @@ Log.Logger = log;
 
 ### 2. Install
 
+The forked lib can be installed from:
 [Install Common.Logging.Serilog.StructuredText](https://www.nuget.org/packages/Common.Logging.Serilog.StructuredText/)
+
+This fork hasn't been pushed to nuget.
 
 ### 3. Configure
 
