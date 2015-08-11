@@ -1,4 +1,4 @@
-﻿// Copyright 2013 CaptiveAire Systems
+﻿// Copyright 2014 CaptiveAire Systems
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -19,67 +19,53 @@ namespace Common.Logging.Serilog
     using global::Serilog;
 
     /// <summary>
-    /// Serilog factory adapter.
+    ///     Serilog factory adapter.
     /// </summary>
     public class SerilogFactoryAdapter : ILoggerFactoryAdapter
     {
         /// <summary>
-        /// Instance of Serilog
+        ///     Instance of Serilog
         /// </summary>
-        private readonly ILogger _logger;
+        readonly ILogger _logger;
 
         /// <summary>
-        /// Gets the logger.
-        /// </summary>
-        /// <value>
-        /// The logger.
-        /// </value>
-        protected ILogger Logger
-        {
-            get
-            {
-                return this._logger ?? Log.Logger;
-            }
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the SerilogFactoryAdapter class.
+        ///     Initializes a new instance of the SerilogFactoryAdapter class.
         /// </summary>
         /// <param name="logger"> The logger.</param>
         public SerilogFactoryAdapter(ILogger logger)
         {
-            this._logger = logger;
+            _logger = logger;
         }
 
         /// <summary>
-        /// Initializes a new instance of the SerilogFactoryAdapter class.
+        ///     Initializes a new instance of the SerilogFactoryAdapter class.
         /// </summary>
         public SerilogFactoryAdapter()
         {
         }
 
         /// <summary>
-        /// Get a ILog instance by type.
+        ///     Get a ILog instance by type.
         /// </summary>
         /// <param name="type"> The type to use for the logger.</param>
         /// <returns>
-        /// The logger.
+        ///     The logger.
         /// </returns>
         public ILog GetLogger(Type type)
         {
-            return new SerilogCommonLogger(this.Logger.ForContext(type));
+            return new SerilogCommonLogger(new SerilogInstanceWrapper(l => l.ForContext(type), _logger));
         }
 
         /// <summary>
-        /// Get a ILog instance by name.
+        ///     Get a ILog instance by name.
         /// </summary>
         /// <param name="name"> The name of the logger.</param>
         /// <returns>
-        /// The logger.
+        ///     The logger.
         /// </returns>
         public ILog GetLogger(string name)
         {
-            return new SerilogCommonLogger(this.Logger.ForContext("name", name));
+            return new SerilogCommonLogger(new SerilogInstanceWrapper(l => l.ForContext("NamedContext", name), _logger));
         }
     }
 }
